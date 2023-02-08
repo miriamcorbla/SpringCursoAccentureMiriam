@@ -55,7 +55,7 @@ public class Categoria {
 	 * @throws DomainException 
 	 * 
 	 */
-	public void setId_categoria(int id_categoria) throws DomainException {
+	public void setId_categoria(int id_categoria){
 		this.id_categoria = id_categoria;
 
 	}
@@ -74,8 +74,7 @@ public class Categoria {
 	 * 
 	 */
 	public void setCat_nombre(String cat_nombre) throws DomainException {
-		if(Validator.isAlfanumericWhiteSpaces(cat_nombre) &&
-				Validator.cumpleLongitud(cat_nombre, LONG_MIN, LONG_MAX)) {
+		if(Validator.cumpleLongitud(cat_nombre, LONG_MIN, LONG_MAX)) {
 			this.cat_nombre = cat_nombre;
 		}else {
 			throw new DomainException();

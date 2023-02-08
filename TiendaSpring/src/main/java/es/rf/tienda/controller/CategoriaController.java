@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.rf.tienda.dominio.Categoria;
+import es.rf.tienda.exception.DomainException;
 import es.rf.tienda.interfaces.daos.ICategoria;
 
 @RestController
@@ -49,6 +50,7 @@ public class CategoriaController {
 	
 	@PostMapping
 	public String[] insertar(@RequestBody Categoria cat){
+		cat.setId_categoria(1);
 		cDAO.save(cat);
 		return new String[] {"200", "Salvado"};
 	}

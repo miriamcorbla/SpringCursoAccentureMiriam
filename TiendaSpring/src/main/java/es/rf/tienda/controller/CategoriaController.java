@@ -51,7 +51,7 @@ public class CategoriaController {
 	@PostMapping
 	public String[] insertar(@RequestBody Categoria cat){
 		
-		cat.setId_categoria(1);
+		cat.setId_categoria(0);
 		cDAO.save(cat);
 		return new String[] {"200", "Salvado"};
 	}

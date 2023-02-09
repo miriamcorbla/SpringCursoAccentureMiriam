@@ -22,7 +22,7 @@ import jakarta.persistence.Transient;
 @Table(schema = "ALUMNO_MCB", name = "Categorias")
 public class Categoria {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	private int id_categoria;			//identificador categoria AUTOINCREMENTAL
 	
 	@Column(nullable = false)
@@ -31,8 +31,11 @@ public class Categoria {
 	@Column
 	private String cat_descripcion;		//descripcion de la categoria
 	
+	@Transient
 	private final int LONG_MIN = 5;
+	@Transient
 	private final int LONG_MAX = 50;
+	@Transient
 	private final int LONG_MAX_DESCR = 200;
 	
 	

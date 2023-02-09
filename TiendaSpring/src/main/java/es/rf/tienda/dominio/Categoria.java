@@ -1,6 +1,9 @@
 package es.rf.tienda.dominio;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import es.rf.tienda.exception.DomainException;
+import es.rf.tienda.util.ErrorMessages;
 import es.rf.tienda.util.Validator;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,17 +35,38 @@ public class Categoria {
 	private String cat_descripcion;		//descripcion de la categoria
 	
 	@Transient
+	@JsonIgnore
 	private final int LONG_MIN = 5;
 	@Transient
+	@JsonIgnore
 	private final int LONG_MAX = 50;
 	@Transient
+	@JsonIgnore
 	private final int LONG_MAX_DESCR = 200;
 	
 	
 	@Transient
-	public boolean isValid(){	
-		return !Validator.isVacio(cat_nombre) &&
-				id_categoria > 0;
+	@JsonIgnore
+	public boolean isValidInsert() throws DomainException{	
+		if(!Validator.isVacio(cat_nombre) && 
+					Validator.cumpleLongitud(cat_nombre, LONG_MIN, LONG_MAX)) {
+			return true;
+		}else{
+			throw new DomainException(ErrorMessages.PROERR_LONGITUD_MIN + LONG_MIN + " " + 
+					ErrorMessages.PROERR_LONGITUD_MAX + LONG_MAX);
+		}
+	}
+	
+	@Transient
+	@JsonIgnore
+	public boolean isValidUpdate() throws DomainException{	
+		if( !Validator.isVacio(cat_nombre) && id_categoria != 0 && 
+				Validator.cumpleLongitud(cat_nombre, LONG_MIN, LONG_MAX)) {
+			return true;
+		}else {
+			throw new DomainException(ErrorMessages.PROERR_LONGITUD_MIN + LONG_MIN + " " + 
+					ErrorMessages.PROERR_LONGITUD_MAX + LONG_MAX);
+		}
 	}
 	
 	/**
@@ -80,7 +104,8 @@ public class Categoria {
 		if(Validator.cumpleLongitud(cat_nombre, LONG_MIN, LONG_MAX)) {
 			this.cat_nombre = cat_nombre;
 		}else {
-			throw new DomainException();
+			throw new DomainException(ErrorMessages.PROERR_LONGITUD_MIN + LONG_MIN + " " 
+					+ ErrorMessages.PROERR_LONGITUD_MAX + LONG_MAX);
 		}
 		
 	}
@@ -103,7 +128,7 @@ public class Categoria {
 				Validator.cumpleLongitudMax(cat_descripcion, LONG_MAX_DESCR)) {
 			this.cat_descripcion = cat_descripcion;
 		}else {
-			throw new DomainException();
+			throw new DomainException(ErrorMessages.PROERR_LONGITUD_MAX + LONG_MAX_DESCR);
 		}
 
 	}

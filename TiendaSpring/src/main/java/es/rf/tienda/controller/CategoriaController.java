@@ -3,6 +3,7 @@ package es.rf.tienda.controller;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,53 +15,39 @@ import org.springframework.web.bind.annotation.RestController;
 
 import es.rf.tienda.dominio.Categoria;
 import es.rf.tienda.exception.DomainException;
-import es.rf.tienda.interfaces.daos.ICategoria;
+import es.rf.tienda.service.IServiceCategoria;
 
 @RestController
 @RequestMapping("/categorias")
 public class CategoriaController {
-	
-//	private es.rf.tienda.interfaces.daos.ICategoria cDAO;
-//	
-//	public void ICategoria(ICategoria cDAO) {
-//		this.cDAO = cDAO;
-//	}
+
 	@Autowired
-	private ICategoria cDAO;
+	private IServiceCategoria serviceCat;
 	
 	@GetMapping
 	public ArrayList<Categoria> listarCategorias(){
-		return (ArrayList<Categoria>) cDAO.findAll();
+		return serviceCat.listAll();
 	}
 	
 	@GetMapping("/{id}")
 	public Categoria leerCategoriaId(@PathVariable("id") int id) {
-		return cDAO.findById(id).get();
+		return serviceCat.list(id);
 	}
 	
 	@DeleteMapping("/{id}")
-	public void eliminarCategoriaId(@PathVariable("id") int id) {
-		cDAO.deleteById(id);
-	}
-	
-	@DeleteMapping
-	public void eliminarCategoria(Categoria cat) {
-		eliminarCategoriaId(cat.getId_categoria());
+	public void eliminarCategoriaId(@PathVariable("id") int id) throws Exception {
+		serviceCat.delete(id);
 	}
 	
 	@PostMapping
-	public String[] insertar(@RequestBody Categoria cat){
-		
+	public String[] insertar(@RequestBody Categoria cat) throws DomainException{
 		cat.setId_categoria(0);
-		cDAO.save(cat);
-		return new String[] {"200", "Salvado"};
+		return serviceCat.insert(cat);
 	}
 	
 	@PutMapping
-	public String[] modificarCategoria(@RequestBody Categoria cat) {
-		cDAO.save(cat);
-		return new String[] {"200", "Modificado"};
-	}
-	
+	public String[] modificarCategoria(@RequestBody Categoria cat) throws DomainException {
+		return serviceCat.update(cat);
+	}	
 
 }

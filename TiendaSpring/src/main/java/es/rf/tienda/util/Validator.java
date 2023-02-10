@@ -302,7 +302,7 @@ public class Validator {
 	 * 
 	 **************************************************************************************/
 	public static boolean cumpleLongitudMin(String texto, int longitudMinima) {
-		return (texto.length() >= longitudMinima); // dev. directamente el resultado de la comprobación
+		return !isVacio(texto) && (texto.length() >= longitudMinima); // dev. directamente el resultado de la comprobación
 	}
 
 	/**
@@ -324,7 +324,7 @@ public class Validator {
 	 * 
 	 **************************************************************************************/
 	public static boolean cumpleLongitudMax(String texto, int longitudMaxima) {
-		return (texto.length() <= longitudMaxima);
+		return !isVacio(texto) && (texto.length() <= longitudMaxima);
 	}
 
 	/**

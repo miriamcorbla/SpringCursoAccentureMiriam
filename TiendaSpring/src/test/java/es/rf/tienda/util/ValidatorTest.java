@@ -464,6 +464,22 @@ class ValidatorTest {
 	}
 	
 	/**
+	 * Comprueba que devuelve falso si recibe un texto nulo
+	 */
+	@Test
+	void testCumpleLongitudNuloMax() {
+		assertFalse(Validator.cumpleLongitudMax(TEXTO_NULO, LONGITUD_MAX));
+	}
+	
+	/**
+	 * Comprueba que devuelve falso si recibe un texto nulo
+	 */
+	@Test
+	void testCumpleLongitudNuloMin() {
+		assertFalse(Validator.cumpleLongitudMin(TEXTO_NULO, LONGITUD_MIN));
+	}
+	
+	/**
 	 * Comprueba que arroja falso si sobrepasa la longitud del texto que recibe a la máxima permitida
 	 */
 	@Test

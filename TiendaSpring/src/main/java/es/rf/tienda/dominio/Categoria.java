@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import es.rf.tienda.exception.DomainException;
 import es.rf.tienda.util.ErrorMessages;
 import es.rf.tienda.util.Validator;
+import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,15 +24,15 @@ import jakarta.persistence.Transient;
  */
 @Entity
 @Table(schema = "ALUMNO_MCB", name = "Categorias")
-public class Categoria {
+public class Categoria implements ModeloValido{
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private int id_categoria;			//identificador categoria AUTOINCREMENTAL
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length = 50)
 	private String cat_nombre;			//nombre de la categoria
 	
-	@Column
+	@Column(nullable = true, length = 200) //es updatable este atributo?
 	private String cat_descripcion;		//descripcion de la categoria
 	
 	@Transient
@@ -45,23 +46,19 @@ public class Categoria {
 	private final int LONG_MAX_DESCR = 200;
 	
 	
-	@Transient
-	@JsonIgnore
+	
 	public boolean isValidInsert() throws DomainException{	
-		if(!Validator.isVacio(cat_nombre) && 
-					Validator.cumpleLongitud(cat_nombre, LONG_MIN, LONG_MAX)) {
+		if((!Validator.isVacio(cat_nombre) && Validator.cumpleLongitud(cat_nombre, LONG_MIN, LONG_MAX))){
 			return true;
 		}else{
-			throw new DomainException(ErrorMessages.PROERR_LONGITUD_MIN + LONG_MIN + " " + 
+			throw new DomainException(ErrorMessages.ERR_CAT_NOMBRE_NULO + " y " + ErrorMessages.PROERR_LONGITUD_MIN + LONG_MIN + ", " + 
 					ErrorMessages.PROERR_LONGITUD_MAX + LONG_MAX);
 		}
 	}
 	
-	@Transient
-	@JsonIgnore
 	public boolean isValidUpdate() throws DomainException{	
-		if( !Validator.isVacio(cat_nombre) && id_categoria != 0 && 
-				Validator.cumpleLongitud(cat_nombre, LONG_MIN, LONG_MAX)) {
+		if(!Validator.isVacio(cat_nombre) && id_categoria != 0 
+				&& Validator.cumpleLongitud(cat_nombre, LONG_MIN, LONG_MAX)){
 			return true;
 		}else {
 			throw new DomainException(ErrorMessages.PROERR_LONGITUD_MIN + LONG_MIN + " " + 
@@ -101,12 +98,13 @@ public class Categoria {
 	 * 
 	 */
 	public void setCat_nombre(String cat_nombre) throws DomainException {
-		if(Validator.cumpleLongitud(cat_nombre, LONG_MIN, LONG_MAX)) {
-			this.cat_nombre = cat_nombre;
-		}else {
-			throw new DomainException(ErrorMessages.PROERR_LONGITUD_MIN + LONG_MIN + " " 
-					+ ErrorMessages.PROERR_LONGITUD_MAX + LONG_MAX);
-		}
+		//if(!Validator.isVacio(cat_nombre) 
+			//	&& Validator.cumpleLongitud(cat_nombre, LONG_MIN, LONG_MAX)) {
+		this.cat_nombre = cat_nombre;
+		//}else {
+			//throw new DomainException(ErrorMessages.ERR_CAT_NOMBRE_NULO + " y " + ErrorMessages.PROERR_LONGITUD_MIN + LONG_MIN + ", " + 
+				//	ErrorMessages.PROERR_LONGITUD_MAX + LONG_MAX);		
+		//}
 		
 	}
 	
@@ -124,13 +122,11 @@ public class Categoria {
 	 * 
 	 */
 	public void setCat_descripcion(String cat_descripcion) throws DomainException {
-		if(Validator.isAlfanumericWhiteSpaces(cat_descripcion) &&
-				Validator.cumpleLongitudMax(cat_descripcion, LONG_MAX_DESCR)) {
+		if(cat_descripcion == null) {
 			this.cat_descripcion = cat_descripcion;
 		}else {
-			throw new DomainException(ErrorMessages.PROERR_LONGITUD_MAX + LONG_MAX_DESCR);
+			this.cat_descripcion = StringUtils.truncate(cat_descripcion, LONG_MAX_DESCR);
 		}
-
 	}
 
 

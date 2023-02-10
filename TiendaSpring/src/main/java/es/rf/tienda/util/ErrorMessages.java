@@ -1,16 +1,16 @@
 package es.rf.tienda.util;
 
 
-/* *****************************************************
+/**
+ *  *****************************************************
  * NOMBRE: ErrorMessages.java
  * 
  * DESCRIPCION:  
  * 			Clase con los String que contienen los mensajes de error 
  * 			especificados por las reglas de negocio.
  * 
- *  @version	Enero 2016
- *  
- *  @author 	Miguel Garcia
+ *  @version	Feb 2023
+ *  @author m.corchero.blazquez
  *  
  *  *****************************************************/
 public class ErrorMessages {
@@ -44,4 +44,15 @@ public class ErrorMessages {
 	 */
 	public final static String PROERR_MAIL = "Correo electrónico no válido";
 	
+	/**
+	 * ILlegalArgumentException
+	 */
+	public final static String ERR_ARG_CAT = "Categoría no válida";
+	/**
+	 * ILlegalArgumentException Id no válido
+	 */
+	public final static String ERR_ARG_CAT_ID = "ID de Categoría no válido. No existe";
+	
+	public final static String ERR_CAT_NOMBRE_NULO = "El campo nombre de la categoria no puede ser nulo ";
+	public final static String ERR_CAT_NOEX = "La categoría no existe";
 }

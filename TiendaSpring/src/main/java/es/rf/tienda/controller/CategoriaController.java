@@ -1,9 +1,13 @@
 package es.rf.tienda.controller;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.rf.tienda.dominio.Categoria;
+import es.rf.tienda.exception.ControllerException;
 import es.rf.tienda.exception.DAOException;
 import es.rf.tienda.exception.DomainException;
 import es.rf.tienda.service.IServiceCategoria;
@@ -32,17 +37,36 @@ public class CategoriaController {
 	}
 
 	@GetMapping("/{id}")
-	public Mensaje leerCategoriaId(@PathVariable("id") int id) throws DAOException, DomainException {
+	public Mensaje leerCategoriaId(@PathVariable("id") int id) throws DAOException, DomainException, ControllerException {
 		try {
 			Mensaje msj = new Mensaje(200, "Registro encontrado");
 			msj.setCategoria(serviceCat.list(id));
 			return msj;
 		} catch (DomainException d) {
-			return new Mensaje(400, d.getMessage());
+			throw new ControllerException(d.getMessage());
 		} catch (DAOException e) {
-			return new Mensaje(500, e.getMessage());
+			throw new ControllerException(e.getMessage());
 		}
 	}
+	/*
+	public ResponseEntity<Map<String, Object>> leerCategoriaIdResponse(@PathVariable("id") int id) throws DAOException, DomainException, ControllerException {
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+		try {
+			Categoria categoria = serviceCat.list(id);
+			if(categoria!=null) {
+				map.put("status", 200);
+				map.put("data", categoria);
+				return new ResponseEntity<>(map, HttpStatus.OK);
+			}else {
+				throw new ControllerException("No existe la categoria indicada");
+			}
+		} catch (DomainException d) {
+			throw new ControllerException(d.getMessage());
+		} catch (DAOException e) {
+			throw new ControllerException(e.getMessage());
+		}
+	}
+	*/
 
 	@DeleteMapping("/{id}")
 	public String[] eliminarCategoriaId(@PathVariable("id") int id) {
@@ -82,29 +106,29 @@ public class CategoriaController {
 	}
 
 	public class Mensaje {
-		private int codeNum;
-		private String descripcionCode;
+		private int codigo;
+		private String descripcion;
 		private Categoria categoria;
 
-		public Mensaje(int numError, String descripcion_error) {
-			this.codeNum = numError;
-			this.descripcionCode = descripcion_error;
+		public Mensaje(int codigo, String descripcion) {
+			this.codigo = codigo;
+			this.descripcion = descripcion;
 		}
 
-		public int getNumError() {
-			return codeNum;
+		public int getCodigo() {
+			return codigo;
 		}
 
-		public void setNumError(int numError) {
-			this.codeNum = numError;
+		public void setCodigo(int numError) {
+			this.codigo = numError;
 		}
 
-		public String getDescripcion_error() {
-			return descripcionCode;
+		public String getDescripcion() {
+			return descripcion;
 		}
 
-		public void setDescripcion_error(String descripcion_error) {
-			this.descripcionCode = descripcion_error;
+		public void setDescripcion(String descripcion_error) {
+			this.descripcion = descripcion_error;
 		}
 
 		public Categoria getCategoria() {

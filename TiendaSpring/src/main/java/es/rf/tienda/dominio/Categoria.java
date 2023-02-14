@@ -98,13 +98,13 @@ public class Categoria implements ModeloValido{
 	 * 
 	 */
 	public void setCat_nombre(String cat_nombre) throws DomainException {
-		//if(!Validator.isVacio(cat_nombre) 
-			//	&& Validator.cumpleLongitud(cat_nombre, LONG_MIN, LONG_MAX)) {
+		if(!Validator.isVacio(cat_nombre) 
+				&& Validator.cumpleLongitud(cat_nombre, LONG_MIN, LONG_MAX)) {
 		this.cat_nombre = cat_nombre;
-		//}else {
-			//throw new DomainException(ErrorMessages.ERR_CAT_NOMBRE_NULO + " y " + ErrorMessages.PROERR_LONGITUD_MIN + LONG_MIN + ", " + 
-				//	ErrorMessages.PROERR_LONGITUD_MAX + LONG_MAX);		
-		//}
+		}else {
+			throw new DomainException(ErrorMessages.ERR_CAT_NOMBRE_NULO + " y " + ErrorMessages.PROERR_LONGITUD_MIN + LONG_MIN + ", " + 
+					ErrorMessages.PROERR_LONGITUD_MAX + LONG_MAX);		
+		}
 		
 	}
 	

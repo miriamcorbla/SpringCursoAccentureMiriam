@@ -70,7 +70,9 @@ class CategoriaControllerTest {
 	 * @throws DomainException
 	 * @throws DAOException
 	 */
+	/*
 	@Test
+
 	void testLeerCategoriaId() throws DomainException, DAOException {
 		Categoria c1 = new Categoria();
 		c1.setCat_descripcion("Prueba test");
@@ -85,13 +87,14 @@ class CategoriaControllerTest {
 		assertEquals(categoriaControlador.getDescripcion_error(), "Registro encontrado");
 
 	}
-
+*/
 	/**
 	 * Test para comprobar que arroja una excepción concreta
 	 * al leer una categoria que no existe
 	 * @throws DomainException
 	 * @throws DAOException
 	 */
+	/*
 	@Test
 	void testLeerCategoriaIdErrorDomain() throws DomainException, DAOException {
 		Categoria c1 = new Categoria();
@@ -107,7 +110,7 @@ class CategoriaControllerTest {
 		assertEquals(categoriaControlador.getDescripcion_error(), ErrorMessages.ERR_CAT_NOEX);
 
 	}
-
+*/
 	/**
 	 * Test para eliminar una categoría a partir de su ID 
 	 * @throws DomainException

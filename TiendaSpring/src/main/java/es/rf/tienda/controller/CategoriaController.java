@@ -32,10 +32,21 @@ public class CategoriaController {
 	private IServiceCategoria serviceCat;
 
 	@GetMapping
-	public ArrayList<Categoria> listarCategorias() {
-		return serviceCat.listAll();
+	public ResponseEntity<Map<String, Object>> listarCategorias() throws ControllerException {
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+		ArrayList<Categoria> categorias = serviceCat.listAll();
+		if(!categorias.isEmpty()) {
+			map.put("codigo", 302);
+			map.put("descripcion", "Registros encontrados");
+			map.put("datos", categorias);
+			return new ResponseEntity<>(map, HttpStatus.FOUND);
+		}else {
+			map.put("codigo", 404);
+			map.put("descripcion", "No hay registros en la Base de Datos");
+			return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+		}
 	}
-
+	/*
 	@GetMapping("/{id}")
 	public Mensaje leerCategoriaId(@PathVariable("id") int id) throws DAOException, DomainException, ControllerException {
 		try {
@@ -47,61 +58,55 @@ public class CategoriaController {
 		} catch (DAOException e) {
 			throw new ControllerException(e.getMessage());
 		}
-	}
-	/*
-	public ResponseEntity<Map<String, Object>> leerCategoriaIdResponse(@PathVariable("id") int id) throws DAOException, DomainException, ControllerException {
-		Map<String, Object> map = new LinkedHashMap<String, Object>();
+	}*/
+	@GetMapping("/{id}")
+	public ResponseEntity<Mensaje> leerCategoriaId(@PathVariable("id") int id) throws ControllerException {
 		try {
-			Categoria categoria = serviceCat.list(id);
-			if(categoria!=null) {
-				map.put("status", 200);
-				map.put("data", categoria);
-				return new ResponseEntity<>(map, HttpStatus.OK);
-			}else {
-				throw new ControllerException("No existe la categoria indicada");
-			}
+			Mensaje msj = new Mensaje(302, "Registro encontrado");
+			msj.setCategoria(serviceCat.list(id));
+			return new ResponseEntity<Mensaje>(msj, HttpStatus.FOUND);
 		} catch (DomainException d) {
-			throw new ControllerException(d.getMessage());
+			Mensaje msj = new Mensaje(400, d.getMessage());
+			return new ResponseEntity<Mensaje>(msj,  HttpStatus.BAD_REQUEST);
 		} catch (DAOException e) {
-			throw new ControllerException(e.getMessage());
+			Mensaje msj = new Mensaje(500, e.getMessage());
+			return new ResponseEntity<Mensaje>(msj, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	*/
 
 	@DeleteMapping("/{id}")
-	public String[] eliminarCategoriaId(@PathVariable("id") int id) {
+	public ResponseEntity<String[]> eliminarCategoriaId(@PathVariable("id") int id) throws ControllerException {
 		try {
 			serviceCat.delete(id);
-			return new String[] { "200", "El registro se ha eliminado en la base de datos" };
+			return new ResponseEntity<String[]>(new String[]{ "200", "El registro se ha eliminado en la base de datos" }, HttpStatus.OK);
 		} catch (DomainException d) {
-			return new String[] { "400", d.getMessage() };
+			return new ResponseEntity<String[]>(new String[]{"400", d.getMessage()},  HttpStatus.BAD_REQUEST);
 		} catch (DAOException e) {
-			return new String[] { "500", e.getMessage() };
+			return new ResponseEntity<String[]>(new String[]{ "500", e.getMessage() }, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	@PostMapping
-	public String[] insertar(@RequestBody Categoria cat) {
+	public ResponseEntity<String[]> insertar(@RequestBody Categoria cat) {
 		try {
 			cat.setId_categoria(0);
 			serviceCat.insert(cat);
-			return new String[] { "200", "El registro se ha guardado en la base de datos" };
+			return new ResponseEntity<String[]>(new String[]{ "201", "El registro se ha guardado en la base de datos" }, HttpStatus.CREATED);
 		} catch (DomainException d) {
-			return new String[] { "400", d.getMessage() };
+			return new ResponseEntity<String[]>(new String[]{"400", d.getMessage()},  HttpStatus.BAD_REQUEST);
 		} catch (DAOException e) {
-			return new String[] { "500", e.getMessage() };
+			return new ResponseEntity<String[]>(new String[]{ "500", e.getMessage() }, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
 	@PutMapping
-	public String[] modificarCategoria(@RequestBody Categoria cat) { // OJO que si no existe, añade uno!!!
+	public ResponseEntity<String[]> modificarCategoria(@RequestBody Categoria cat) { // OJO que si no existe, añade uno!!!
 		try {
 			serviceCat.update(cat);
-			return new String[] { "200", "El registro se ha modificado en la base de datos" };
+			return new ResponseEntity<String[]>(new String[]{ "200", "El registro se ha guardado en la base de datos" }, HttpStatus.OK);
 		} catch (DomainException d) {
-			return new String[] { "400", d.getMessage() };
+			return new ResponseEntity<String[]>(new String[]{"400", d.getMessage()},  HttpStatus.BAD_REQUEST);
 		} catch (DAOException e) {
-			return new String[] { "500", e.getMessage() };
+			return new ResponseEntity<String[]>(new String[]{ "500", e.getMessage() }, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

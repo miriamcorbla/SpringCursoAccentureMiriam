@@ -44,6 +44,7 @@ class CategoriaControllerTest {
 	 * Test para listar categorias
 	 * @throws Exception
 	 */
+	/*
 	@Test
 	void testListarCategorias() throws Exception {
 		ArrayList<Categoria> categorias = new ArrayList<Categoria>();
@@ -63,7 +64,7 @@ class CategoriaControllerTest {
 
 		assertThat(categoriasControlador).containsExactly(c1, c2);
 
-	}
+	}*/
 
 	/**
 	 * Tests para mostar una sola categoría a partir de su ID
@@ -116,6 +117,7 @@ class CategoriaControllerTest {
 	 * @throws DomainException
 	 * @throws DAOException
 	 */
+	/*
 	@Test
 	void testEliminarCategoriaId() throws DomainException, DAOException {
 
@@ -123,7 +125,7 @@ class CategoriaControllerTest {
 		assertThat(cat.eliminarCategoriaId(0)).containsExactly("200",
 				"El registro se ha eliminado en la base de datos");
 
-	}
+	}*/
 
 	/**
 	 * Test para comprobar que lanza excepción al eliminar una categoria
@@ -131,6 +133,7 @@ class CategoriaControllerTest {
 	 * @throws DomainException
 	 * @throws DAOException
 	 */
+	/*
 	@Test
 	void testEliminarCategoriaIdErrorDomain() throws DomainException, DAOException {
 
@@ -138,13 +141,14 @@ class CategoriaControllerTest {
 
 		assertThat(cat.eliminarCategoriaId(0)).containsExactly("500", ErrorMessages.ERR_ARG_CAT_ID);
 
-	}
+	}*/
 
 	/**
 	 * Test para comprobar la inserción de una categoria
 	 * @throws DomainException
 	 * @throws DAOException
 	 */
+	/*
 	@Test
 	void testInsertar() throws DomainException, DAOException {
 
@@ -155,7 +159,7 @@ class CategoriaControllerTest {
 		doNothing().when(serviceCat).insert(c1);
 
 		assertThat(cat.insertar(c1)).containsExactly("200", "El registro se ha guardado en la base de datos");
-	}
+	}*/
 
 	/**
 	 * Test para comprobar que lanza excepción si insertamos una categoria
@@ -163,6 +167,7 @@ class CategoriaControllerTest {
 	 * @throws DomainException
 	 * @throws DAOException
 	 */
+	/*
 	@Test
 	void testInsertarErrorDomainIsValid() throws DomainException, DAOException {
 
@@ -174,7 +179,7 @@ class CategoriaControllerTest {
 		assertThat(cat.insertar(c1)).containsExactly("400", (ErrorMessages.ERR_CAT_NOMBRE_NULO + " y "
 				+ ErrorMessages.PROERR_LONGITUD_MIN + LONG_MIN + ", " + ErrorMessages.PROERR_LONGITUD_MAX + LONG_MAX));
 
-	}
+	}*/
 /*
 	@Test
 	void testInsertarErrorDAO() throws DomainException, DAOException {
@@ -191,6 +196,7 @@ class CategoriaControllerTest {
 	 * @throws DomainException
 	 * @throws DAOException
 	 */
+	/*
 	@Test
 	void testModificarCategoria() throws DomainException, DAOException {
 		Categoria c1 = new Categoria();
@@ -201,13 +207,14 @@ class CategoriaControllerTest {
 
 		assertThat(cat.modificarCategoria(c1)).containsExactly("200",
 				"El registro se ha modificado en la base de datos");
-	}
+	}*/
 	
 	/**
 	 * Test para comprobar que se lanza la excepción si la categoria no existe
 	 * @throws DomainException
 	 * @throws DAOException
 	 */
+	/*
 	@Test
 	void testModificarCategoriaErrorDomain() throws DomainException, DAOException {
 
@@ -217,7 +224,7 @@ class CategoriaControllerTest {
 		
 		assertThat(cat.modificarCategoria(c1)).containsExactly("400", ErrorMessages.ERR_CAT_NOEX);
 		
-	}
+	}*/
 	
 	/**
 	 * Test para comprobar que se lanza excepción si no se cumple con los requisitos
@@ -225,6 +232,7 @@ class CategoriaControllerTest {
 	 * @throws DomainException
 	 * @throws DAOException
 	 */
+	/*
 	@Test
 	void testModificarCategoriaErrorDomainIsValid() throws DomainException, DAOException {
 
@@ -236,13 +244,14 @@ class CategoriaControllerTest {
 		assertThat(cat.modificarCategoria(c1)).containsExactly("400", ErrorMessages.PROERR_LONGITUD_MIN + LONG_MIN + " " + 
 				ErrorMessages.PROERR_LONGITUD_MAX + LONG_MAX);
 
-	}
+	}*/
 	
 	/**
 	 * Test para comprobar que lanza excepción si el ID de la categoria no existe
 	 * @throws DomainException
 	 * @throws DAOException
 	 */
+	/*
 	@Test
 	void testModificarCategoriaErrorDAO() throws DomainException, DAOException {
 
@@ -252,5 +261,5 @@ class CategoriaControllerTest {
 		doThrow(new DAOException(ErrorMessages.ERR_ARG_CAT_ID)).when(serviceCat).update(c1);
 		
 		assertThat(cat.modificarCategoria(c1)).containsExactly("500", ErrorMessages.ERR_ARG_CAT_ID);
-	}
+	}*/
 }

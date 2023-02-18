@@ -86,33 +86,17 @@ class ServiceCategoriaTest {
 	
 	/**
 	 * Test para comprobar que se lanza una excepción domain
-	 * cuando inserta una categoría no válida por tener un campo
-	 * nulo
+	 * cuandose elimina una categoria inexistente
 	 * @throws DomainException
 	 * @throws DAOException
 	 */
 	@Test
-	void testDeleteErrorDomain() throws DomainException, DAOException {
-		//doThrow(new DAOException(ErrorMessages.ERR_ARG_CAT_ID)).when(cDAO).deleteById(0);
+	void testDeleteErrorDAO() throws DomainException, DAOException {
+		//doThrow(new DAOException("")).when(cDAO.deleteById(0));
 		assertThrows(DAOException.class,
 	            () -> { serviceCat.delete(0);});
 	}
 
-	/*
-	@Test
-	void testUpdate() throws DomainException, DAOException {
-		Categoria c1 = new Categoria();
-		c1.setCat_descripcion("Prueba test");
-		c1.setCat_nombre("Prueba");
-
-		serviceCat.insert(c1);
-		
-		serviceCat.update(c1);
-		
-		verify(cDAO, times(1)).save(c1);
-
-		
-	}*/
 
 	/**
 	 * Test para probar que lista por Id

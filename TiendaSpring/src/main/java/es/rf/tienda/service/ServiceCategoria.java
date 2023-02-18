@@ -19,6 +19,9 @@ public class ServiceCategoria implements IServiceCategoria{
 	@Autowired
 	private ICategoria cDAO;
 
+	/**
+	 * Funcion que inserta una categoria si es válida en la base de datos
+	 */
 	@Override
 	public void insert(Categoria categoria) throws DomainException, DAOException{
 		try {
@@ -32,6 +35,9 @@ public class ServiceCategoria implements IServiceCategoria{
 		}
 	}
 
+	/**
+	 * Función que elimina una categoria según el ID que reciba
+	 */
 	@Override
 	public void delete(int idCategoria) throws DAOException{
 		try {
@@ -41,6 +47,9 @@ public class ServiceCategoria implements IServiceCategoria{
 		}
 	}
 
+	/**
+	 * Función que modifica una categoria
+	 */
 	@Override
 	public void update(Categoria categoria) throws DomainException, DAOException {
 		try {
@@ -68,6 +77,10 @@ public class ServiceCategoria implements IServiceCategoria{
 	}
 
 
+	/**
+	 * Función que devuelve una categoría si la encuentra
+	 * en la abse de datos a través de su ID
+	 */
 	@Override
 	public Categoria list(int idCategoria) throws DAOException, DomainException {
 		try {
@@ -86,6 +99,9 @@ public class ServiceCategoria implements IServiceCategoria{
 		}
 	}
 
+	/**
+	 * Función que lista todas las categorias
+	 */
 	@Override
 	public ArrayList<Categoria> listAll() {
 		return (ArrayList<Categoria>) cDAO.findAll();

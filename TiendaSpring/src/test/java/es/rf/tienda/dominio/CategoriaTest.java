@@ -17,7 +17,7 @@ import es.rf.tienda.exception.DomainException;
 class CategoriaTest {
 	
 	Categoria categoria;
-	static final int CAT_ID_AUTO = 1;
+	static final int CAT_ID_AUTO = 0;
 	static final int CAT_ID_CORRECTO = 9;
 	static final int CAT_INCORR = -8;
 	static final String NOMBRE_CORRECTO = "Nombre";

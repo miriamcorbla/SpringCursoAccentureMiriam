@@ -1,7 +1,5 @@
 package es.rf.tienda.exception;
 
-import org.springframework.http.HttpStatus;
-
 /**
  * POJO Mensaje para que cliente obtenga
  * más información del error. Cda vez que se produzca un error

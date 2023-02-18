@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 //import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -16,6 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
  * @author m.corchero.blazquez
  *
  */
+@CrossOrigin
 @ControllerAdvice
 public class RestExceptionHandler  {
 
@@ -39,21 +41,6 @@ public class RestExceptionHandler  {
 		return new MensajeError(ex);
 	}
 	
-	/*public Map<String, Object> handleConflict(Exception ex) {
-		String mensaje = ex.getClass().getCanonicalName() + "-" + ex.getMessage();
-		System.out.println(mensaje);
-		return montaError(ex, mensaje, HttpStatus.BAD_REQUEST);
-	}*/
-
-
-	
-//	@ExceptionHandler(ControllerException.class)
-//	public ResponseEntity<Object> procControllerException(final Exception e) {
-//		String mensaje = e.getClass() + "-" + e.getMessage();
-//		System.out.println(mensaje);
-//		return montaError(e, mensaje, HttpStatus.BAD_REQUEST);
-//	}
-	 
 	
 /*
 	private Map<String, Object> montaError(Exception ex, String mensaje, HttpStatus conflict) {
